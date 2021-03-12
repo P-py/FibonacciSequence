@@ -1,22 +1,26 @@
+#Importando as bibliotecas necessárias
 import time
 from tkinter import *
-import matplotlib.pyplot
-import turtle
+import matplotlib.pyplot #pip install matplotlib
+import turtle #pip install turtle
 import math
-import pygame
+import pygame #pip install pygame
 import os
 import colorsys
 from math import sqrt, cos, sin
 
-lista_termos = []
+lista_termos = [] #Lista de termos, usada para a função de demonstrar termos da sequência até um certo termo.
 numero_termos = []
 
+#Definindo variáveis para as principais cores que usei
 colorPallete1 = "#ff4a36" 
 colorPallete2 = "#272f3d" 
 
+#Função que demonstra o gráfico de crescimento da sequência e uma certa quantidade de termos baseada em um input do usuário
 def executarFibonacci():
     def fibonacci():
         def sequência_fibonacci():
+            #configurando a janela que mostra a quantidade de termos
             top2 = Toplevel()
             top2.configure(bg=colorPallete2)
             anterior = 0
@@ -34,23 +38,27 @@ def executarFibonacci():
                 soma = proxima+anterior
                 anterior = proxima
                 proxima = soma
-            matplotlib.pyplot.plot(numero_termos, lista_termos)
-            matplotlib.pyplot.title("Sequência de fibonacci")
-            matplotlib.pyplot.show()
+            #linhas usadas para fazer com que o matplotlib mostre o gráfico de crescimento
+            matplotlib.pyplot.plot(numero_termos, lista_termos) #montando o gráfico
+            matplotlib.pyplot.title("Sequência de fibonacci") #dando título para o gráfico
+            matplotlib.pyplot.show() #mostrando
+        #Configurando os widgets necessários para a função
         qntidadetermosEntry = Entry(top)
         qntidadetermosEntry.place(rely=.35, relx=.5, anchor=CENTER)
         qntidadetermosLabel = Label(top, text="Qual a quantidade de termos que deseja visualizar?", font="roboto 11 bold italic", fg=colorPallete1, bg=colorPallete2)
         qntidadetermosLabel.place(rely=.25, relx=.5, anchor=CENTER)
         resultadoButton = Button(top, text="Resultado", font="roboto 12 bold italic", command=sequência_fibonacci, bg=colorPallete1)
         resultadoButton.place(rely=.45, relx=.5, anchor=CENTER)
+    #Função de desenhar a proporção de ouro
     def desenhar():
+        #Configurando a tela base do turtle
         wn = turtle.Screen()
-        wn.setup(1000, 800)
-        wn.bgcolor(colorPallete2)
+        wn.setup(1000, 800) #Tamanho da janela base
+        wn.bgcolor(colorPallete2) #Cor do fundo
         myturtle = turtle.Turtle()
-        myturtle.pencolor(colorPallete1)
-        myturtle.pensize(3)
-        myturtle.speed(5)
+        myturtle.pencolor(colorPallete1) #cor da "caneta"
+        myturtle.pensize(3) #grossura da caneta usada para desenhar
+        myturtle.speed(5) #velocidade com que o "turtle" executa o desenho
         def main():
             valueOne = 0
             valueTwo = 1
@@ -65,6 +73,7 @@ def executarFibonacci():
             for n in range(6):
                 myturtle.forward(sides)
                 myturtle.left(90)
+        #Função que faz o espiral
         def spiral():
             r = 20
             angle = 90
@@ -93,9 +102,10 @@ def executarFibonacci():
             myturtle.left(step_angle/2)
             arcLine(n, step_length, step_angle)
             myturtle.right(step_angle/2)
-        main()
-        spiral()
-        wn.exitonclick()
+        main() #Função principal que faz os quadros
+        spiral() #Função que faz o espiral
+        wn.exitonclick() #Só sair quando clickado para
+    #Função que faz a filotaxia
     def Phyllotaxis():
         os.environ["SDL_VIDEO_CENTERED"]='1'
 
@@ -157,7 +167,7 @@ def executarFibonacci():
                         result_matrix[x][y] = sum
                 return result_matrix
             else:
-                print("error! the columns of the first matrix must be equal with the rows of the second matrix")
+                print("error!")
                 return None
 
         run = True
@@ -205,28 +215,37 @@ def executarFibonacci():
             hue += 0.002
             rotation_angle += 0.01
         pygame.quit()
+    #Configurando a base da janela que contém os botões
     top = Toplevel()
-    top.geometry("450x300")
-    top.title(" Fibonacci")
-    top.configure(bg=colorPallete2)
+    top.geometry("450x300") #Tamanho da janela
+    top.title(" Fibonacci") #Título da janela
+    top.configure(bg=colorPallete2) #Cor de fundo da janela
 
+    #Botão que executa a função de gráfico e termos
     FibonacciButton = Button(top, text=" Executar", font="Helvetica 13 bold italic", width=10, height=2, bg=colorPallete1, command=fibonacci)
     FibonacciButton.place(rely=.1, relx=.5, anchor=CENTER)
-
+    
+    #Botão que desenha a proporção de ouro
     DesenharButton = Button(top, text="Desenhar", font="Helvetica 13 bold italic", width=10, height=2, bg=colorPallete1, command=desenhar)
     DesenharButton.place(rely=.6, relx=.5, anchor=CENTER)
-
+    
+    #Botão que executa a função de filotaxia
     FilotaxiaButton = Button(top, text="Filotaxia", font="Helvetica 13 bold italic", width=10, height=2, bg=colorPallete1, command=Phyllotaxis)
     FilotaxiaButton.place(rely=.8, relx=.5, anchor=CENTER)
     top.mainloop()
-root = Tk()
-root.title(" Fibonacci")
-root.geometry("500x300")
 
+#Configurando a janela raiz, a mais básica
+root = Tk()
+root.title(" Fibonacci") #Título
+root.geometry("500x300") #Tamanho
+
+#Configurando o fundo dessa janela base
 canva = Canvas(root, bg=colorPallete2)
 canva.place(relwidth=1.0, relheight=1.0)
 
+#Configurando o botão que abre a janela com as 3 funções
 ExecButton = Button(canva, text=" Fibonacci", font="Helvetica 20 bold italic", command=executarFibonacci, bg=colorPallete1)
 ExecButton.place(rely=.5, relx=.5, anchor=CENTER)
 
+#Loop
 root.mainloop()
